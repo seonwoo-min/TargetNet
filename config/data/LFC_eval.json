@@ -1,0 +1,4 @@
+{
+"val_path": "data/miRAW_Train_Validation.txt",
+"test_path": "data/LFC_Test.txt"
+}

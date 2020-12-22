@@ -1,0 +1,8 @@
+{
+"skip_connection": true,
+"num_channels": [16, 16, 32],
+"num_blocks": [2, 1, 1],
+"stem_kernel_size": 5,
+"block_kernel_size": 3,
+"pool_size": 3
+}

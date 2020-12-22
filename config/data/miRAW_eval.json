@@ -1,0 +1,13 @@
+{
+"val_path": "data/miRAW_Train_Validation.txt",
+"test0_path": "data/miRAW_Test0.txt",
+"test1_path": "data/miRAW_Test1.txt",
+"test2_path": "data/miRAW_Test2.txt",
+"test3_path": "data/miRAW_Test3.txt",
+"test4_path": "data/miRAW_Test4.txt",
+"test5_path": "data/miRAW_Test5.txt",
+"test6_path": "data/miRAW_Test6.txt",
+"test7_path": "data/miRAW_Test7.txt",
+"test8_path": "data/miRAW_Test8.txt",
+"test9_path": "data/miRAW_Test9.txt"
+}
