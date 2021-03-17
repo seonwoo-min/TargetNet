@@ -9,7 +9,6 @@ import datetime
 import numpy as np
 
 import torch
-from torch.utils.tensorboard import SummaryWriter
 
 
 def Print(string, output, newline=False, timestamp=True):
@@ -57,11 +56,6 @@ def set_output(args, string):
         if not os.path.exists(save_prefix):
             os.makedirs(save_prefix, exist_ok=True)
         output = open(args["output_path"] + "/" + string + ".txt", "a")
-        if "eval" not in string:
-            tb = args["output_path"] + "/tensorboard/"
-            if not os.path.exists(tb):
-                os.makedirs(tb, exist_ok=True)
-            writer = SummaryWriter(tb)
 
     return output, writer, save_prefix
 

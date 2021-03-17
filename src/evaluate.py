@@ -1,7 +1,7 @@
 # Written by Seonwoo Min, Seoul National University (mswzeus@gmail.com)
 
 import numpy as np
-from sklearn.metrics import confusion_matrix
+
 
 def compute_confusion_matrices(outputs, labels):
     """
