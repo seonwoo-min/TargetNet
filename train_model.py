@@ -1,5 +1,8 @@
 # Written by Seonwoo Min, Seoul National University (mswzeus@gmail.com)
 
+import faulthandler
+faulthandler.enable()
+
 import os
 import sys
 import argparse
@@ -19,7 +22,6 @@ parser.add_argument('--model-config', help='path for model configuration file')
 parser.add_argument('--run-config', help='path for run configuration file')
 parser.add_argument('--checkpoint', help='path for checkpoint to resume')
 parser.add_argument('--output-path', help='path for outputs (default: stdout and without saving)')
-parser.add_argument('--sanity-check', default=False, action='store_true', help='sanity check flag')
 
 
 def main():
@@ -28,16 +30,16 @@ def main():
     set_seeds(2020)
     data_cfg = config.DataConfig(args["data_config"])
     model_cfg = config.ModelConfig(args["model_config"])
-    run_cfg   = config.RunConfig(args["run_config"], eval=False, sanity_check=args["sanity_check"])
-    output, writer, save_prefix = set_output(args, "train_model_log")
+    run_cfg   = config.RunConfig(args["run_config"], eval=False)
+    output, save_prefix = set_output(args, "train_model_log")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     config.print_configs(args, [data_cfg, model_cfg, run_cfg], device, output)
     torch.zeros((1)).to(device)
 
     ## Loading datasets
     start = Print(" ".join(['start loading datasets']), output)
-    dataset_train = get_dataset_from_configs(data_cfg, split_idx="train", sanity_check=args["sanity_check"])
-    dataset_val   = get_dataset_from_configs(data_cfg, split_idx="val", sanity_check=args["sanity_check"])
+    dataset_train = get_dataset_from_configs(data_cfg, split_idx="train")
+    dataset_val   = get_dataset_from_configs(data_cfg, split_idx="val")
     iterator_train = torch.utils.data.DataLoader(dataset_train, run_cfg.batch_size, shuffle=True, pin_memory=True, num_workers=4)
     iterator_val   = torch.utils.data.DataLoader(dataset_val,   run_cfg.batch_size, shuffle=False, pin_memory=True, num_workers=4)
     end = Print(" ".join(['loaded', str(len(dataset_train)), 'dataset_train samples']), output)
@@ -53,7 +55,6 @@ def main():
     ## setup trainer configurations
     start = Print('start setting trainer configurations', output)
     trainer = Trainer(model)
-    trainer.load_model(args["checkpoint"], save_prefix, output)
     trainer.set_device(device)
     trainer.set_optim_scheduler(run_cfg, params)
     end = Print('end setting trainer configurations', output)
@@ -81,7 +82,7 @@ def main():
         trainer.epoch += 1
         trainer.scheduler_step()
         trainer.save_model(save_prefix)
-        trainer.log("val", output, writer)
+        trainer.log("val", output)
 
     end = Print('end training a model', output)
     Print(" ".join(['elapsed time:', str(end - start)]), output, newline=True)

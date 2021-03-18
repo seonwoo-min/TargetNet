@@ -50,12 +50,12 @@ def check_args(args):
 
 def set_output(args, string):
     """ set output configurations """
-    output, writer, save_prefix = sys.stdout, None, None
+    output, save_prefix = sys.stdout, None
     if args["output_path"] is not None:
         save_prefix = args["output_path"]
         if not os.path.exists(save_prefix):
             os.makedirs(save_prefix, exist_ok=True)
         output = open(args["output_path"] + "/" + string + ".txt", "a")
 
-    return output, writer, save_prefix
+    return output, save_prefix
 

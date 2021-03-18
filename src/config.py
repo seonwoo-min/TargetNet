@@ -71,7 +71,7 @@ class ModelConfig():
 
 
 class RunConfig():
-    def __init__(self, file=None, idx="run_config", eval=False, sanity_check=False):
+    def __init__(self, file=None, idx="run_config", eval=False):
         """ run configurations """
         self.idx = idx
         self.eval = eval
@@ -94,10 +94,6 @@ class RunConfig():
                 elif key == "dropout_rate":                 self.dropout_rate = value
                 else: sys.exit("# ERROR: invalid key [%s] in run-config file" % key)
 
-        if sanity_check:
-            self.batch_size = 32
-            self.num_epochs = 4
-
     def get_config(self):
         configs = []
         configs.append(["batch_size_eval", self.batch_size])
@@ -111,7 +107,6 @@ class RunConfig():
 
 
 def print_configs(args, cfgs, device, output):
-    if args["sanity_check"]: Print(" ".join(['##### SANITY_CHECK #####']), output)
     Print(" ".join(['##### arguments #####']), output)
     for cfg in cfgs:
         Print(" ".join(['%s:' % cfg.idx, str(args[cfg.idx])]), output)

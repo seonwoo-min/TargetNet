@@ -38,8 +38,7 @@ class TargetNet(nn.Module):
 
         return nn.Sequential(*layers)
 
-    def forward(self, x1, x2):
-        x = combine_seqs(x1, x2)
+    def forward(self, x):
         x = self.stem(x)
         x = self.stage1(x)
         x = self.stage2(x)
@@ -60,14 +59,6 @@ def conv_kx1(in_channels, out_channels, kernel_size, stride=1):
     layers.append(nn.ConstantPad1d((padding_left, padding_right), 0))
     layers.append(nn.Conv1d(in_channels, out_channels, kernel_size, stride, bias=False))
     return nn.Sequential(*layers)
-
-
-def combine_seqs(x1, x2):
-    b, c, l = x2.shape
-    x = x2.new_zeros((b, c * 2, l))
-    x[:, :c, 5:5 + x1.shape[2]] = x1
-    x[:, c:, :] = x2
-    return x
 
 
 class Conv_Layer(nn.Module):

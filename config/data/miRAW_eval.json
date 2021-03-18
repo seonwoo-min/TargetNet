@@ -1,5 +1,4 @@
 {
-"val_path": "data/miRAW_Train_Validation.txt",
 "test0_path": "data/miRAW_Test0.txt",
 "test1_path": "data/miRAW_Test1.txt",
 "test2_path": "data/miRAW_Test2.txt",

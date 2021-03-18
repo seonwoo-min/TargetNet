@@ -9,23 +9,58 @@
 </p>
 <br/>
 
+## Installation
+We recommend creating a Miniconda environment from the <code>TargetNet.yaml</code> file as:
+```
+conda env create -f TargetNet.yaml
+```
+Alternatively, you can install the necessary python packages from the <code>requirements.txt</code> file as:
+```
+pip install -r requirements.txt 
+```
+<br/>
+
+## Data Format
+Extract the <code>data.tar.gz</code> file to obtain the dataset used for the manuscript as
+```
+tar -zxvf data.tar.gz
+```
+If you want to use other datasets, please follow the data format described as follows
+
+- The dataset must be in a tab-delimited file with **at least 4 columns**
+- The first row must be a header line (thus, will not be processed by the TargetNet algorithm).
+- The 1st ~ 4th columns must hold the following information
+    - [1st column] miRNA id
+    - [2nd column] miRNA sequence
+    - [3rd column] mRNA id
+    - [4th column] mRNA sequence -- mRNA sequence must be longer than 40 nucleotides
+- For the file containing train and validation datasets, it requires **additional 2 columns**
+    - [5th column] label -- *0* or *1*
+    - [6th column] split -- *train* or *val*
+    
+Please refer to the provided dataset files for more detailed examples.
+<br/><br/>
+
 ## How to Run
-#### Example:
+### Training a TargetNet model
+You can use the <code>train_model.py</code> script with the necessary configuration files as
 ```
-CUDA_VISIBLE_DEVICES=0 python train_model.py --data-config config/data/miRAW_train.json --model-config config/model/TargetNet.json --run-config config/run/run.json --output-path results/
-CUDA_VISIBLE_DEVICES=0 python evaluate_model.py --data-config config/data/miRAW_eval.json --model-config config/model/TargetNet.json --run-config config/run/run.json --checkpoint pretrained_models/TargetNet.pt --output-path results/
+CUDA_VISIBLE_DEVICES=0 python train_model.py --data-config config/data/miRAW_train.json --model-config config/model/TargetNet.json --run-config config/run/run.json --output-path results/TargetNet_training/
 ```
-<br/>
+The script will generate a <code>TargetNet.pt</code> file containing a trained model. <br>
+For using other datasets, modify the data paths specified in the <code>miRAW_train.json</code> data-config file.
 
-## Data
-- <a href="http://ailab.snu.ac.kr/TargetNet/miRAW_Train_Validation.tar.gz">miRAW Train & Validation</a>
-- <a href="http://ailab.snu.ac.kr/TargetNet/miRAW_Test.tar.gz">miRAW Test</a>
-- <a href="http://ailab.snu.ac.kr/TargetNet/LFC_Test.tar.gz">LFC Test</a>
-<br/>
+### Evaluating a TargetNet model
+You can use the <code>evaluate_model.py</code> script with the necessary configuration files as
+```
+CUDA_VISIBLE_DEVICES=0 python evaluate_model.py --data-config config/data/miRAW_eval.json --model-config config/model/TargetNet.json --run-config config/run/run.json --checkpoint pretrained_models/TargetNet.pt --output-path results/TargetNet-evaluation/
+```
+The script will generate a tab-delimited <code>*_outputs.txt</code> file described as follows
 
-## Requirements
-- Python 3.8
-- PyTorch 1.5
-- Numpy 1.19.1
-- Pandas 1.1.1
+- The output file contains a TargetNet prediction for each miRNA-mRNA set from the given dataset.
+    - [1st column] set_idx -- indicates the set index from the given dataset.
+    - [2nd column] output -- TargetNet prediction score ranging from 0 to 1.
+- For binary classification results, use a threshold of 0.5 to binarize the output scores.
+
+For using other datasets, modify the data paths specified in the <code>miRAW_eval.json</code> data-config file.
 <br/><br/><br/>
