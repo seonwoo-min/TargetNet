@@ -1,8 +1,9 @@
-.data/
-.results/
-*.idea*
-*.ipynb_checkpoints*
+/data
+/results
+*.idea
+*.ipynb_checkpoints
 *backup*
 *ablation*
 *.ipynb
 *.sh
+*.R
