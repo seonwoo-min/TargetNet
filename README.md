@@ -1,4 +1,4 @@
-# TargetNet: Functional microRNA Target Prediction with Deep Neural Networks (Bioinformatics In Press)
+# TargetNet: Functional microRNA Target Prediction with Deep Neural Networks (Bioinformatics 2022)
 Official Pytorch implementation of **TargetNet** | [Paper](https://academic.oup.com/bioinformatics/advance-article-abstract/doi/10.1093/bioinformatics/btab733/6408435)
 <br/>
 
