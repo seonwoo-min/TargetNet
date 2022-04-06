@@ -12,13 +12,16 @@ Official Pytorch implementation of **TargetNet** | [Paper](https://academic.oup.
 <br/>
 
 ## Installation
-We recommend creating a Miniconda environment from the <code>TargetNet.yaml</code> file as:
+We recommend creating a conda environment from the <code>TargetNet.yaml</code> file as:
 ```
 conda env create -f TargetNet.yaml
 ```
-Alternatively, you can install the necessary python packages from the <code>requirements.txt</code> file as:
+Alternatively, you can create a conda environment and install the necessary python packages as:
 ```
-pip install -r requirements.txt 
+conda create -n TargetNet python=3.8
+conda activate TargetNet
+conda install pytorch==1.10.2 torchvision==0.11.3 cudatoolkit=11.3 -c pytorch -c conda-forge
+pip install -r requirements.txt
 ```
 <br/>
 
