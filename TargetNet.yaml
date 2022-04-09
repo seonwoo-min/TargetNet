@@ -97,4 +97,3 @@ dependencies:
     - requests==2.27.1
     - tqdm==4.64.0
     - urllib3==1.26.9
-prefix: /home/seonwoo.min0/workspace/ETC/anaconda3/envs/TargetNet
